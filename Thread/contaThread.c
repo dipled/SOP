@@ -12,11 +12,11 @@ typedef struct args
 {
     int *v;
     int type;
-}Args;
+} Args;
 
 void *conta(void *arguments)
 {
-    Args* args = (Args*)arguments;
+    Args *args = (Args *)arguments;
     int t = args->type;
     int *vetor = args->v;
     int total = 0;
@@ -45,10 +45,11 @@ int main(int argc, char *argv[])
 {
     int i, rc;
     struct timeval tv_ini, tv_fim;
+    void *thread_return;
     unsigned long time_diff, sec_diff, usec_diff, msec_diff;
     pthread_t threads[NUMTHREADS];
     int vetor[NUMELEM];
-    Args a1,a2;
+    Args a1, a2;
     srandom(time(NULL));
     for (i = 0; i < NUMELEM; i++)
     {
@@ -81,8 +82,8 @@ int main(int argc, char *argv[])
     }
     /*estes pthread_join esperam a thread passada como parametro quittarem, isto eh feito para que o main tenha que esperar
     a conclusao das duas funcoes antes de calcular o tempo tomado para executar todo o codigo*/
-    pthread_join(threads[0],NULL);
-    pthread_join(threads[1],NULL);
+    pthread_join(threads[0], &thread_return);
+    pthread_join(threads[1], &thread_return);
     /* marca o tempo de final */
     rc = gettimeofday(&tv_fim, NULL);
     if (rc != 0)
